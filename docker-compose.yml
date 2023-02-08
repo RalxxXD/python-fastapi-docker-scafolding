@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+
+  api:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      SERVICE_PORT: 8000
+      GUNICORN_THREADS: 1
+      GUNICORN_TIMEOUT: 0
+      GUNICORN_WORKER: 0
+      DEVELOPER_MODE: "True"
+    volumes:
+      - ./app:/usr/src/app
+      - logs:/app/logs
+    networks:
+      - api-network
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+    - db
+
+  db:
+    image: postgres:15-alpine
+    ports:
+    - 5432:5432
+    volumes:
+    - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+    networks:
+      - api-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  api-network:
+
+volumes:
+  logs:
+  db_data:

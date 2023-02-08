@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "python-scafolding"
+version = "0.1.0"
+description = "Python Api template"
+authors = ["RalxxXD <raoni.paiva@hotmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.89.1"
+uvicorn = "^0.20.0"
+gunicorn = "^20.1.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.1"
+pytest-cov = "^4.0.0"
+pytest-asyncio = "^0.20.3"
+pylint = "^2.16.1"
+pylint-exit = "^1.2.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
